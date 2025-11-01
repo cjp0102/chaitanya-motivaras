@@ -1,0 +1,5 @@
+{
+  "name": "Copy of CJP ai graphics",
+  "description": "A web application that allows users to create and edit graphics for free using the power of Gemini AI. Generate images from text prompts and then refine them with further instructions.",
+  "requestFramePermissions": []
+}

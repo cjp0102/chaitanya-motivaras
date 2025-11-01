@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHAITANYA.Ins - All-in-One Media Downloader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Chakra+Petch:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --background-color: #121212;
+        --primary-color: #6a0dad;
+        --secondary-color: #00c2ff;
+        --text-color: #eaeaea;
+        --card-bg-color: #1e1e1e;
+        --border-color: rgba(255, 255, 255, 0.1);
+        --glow-color: rgba(106, 13, 173, 0.7);
+        --glow-color-light: rgba(106, 13, 173, 0.4);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: linear-gradient(
+          45deg,
+          #121212,
+          #1a0c2e,
+          #121212,
+          #0c232e
+        );
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      #root {
+        width: 100%;
+        max-width: 600px;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .app-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .header {
+        margin-bottom: 1rem;
+      }
+
+      .glitch-header {
+        position: relative;
+        font-family: 'Chakra Petch', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        color: var(--text-color);
+        animation: glitch-skew 1s infinite linear alternate-reverse;
+      }
+      .glitch-header::before,
+      .glitch-header::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--background-color);
+        overflow: hidden;
+      }
+      .glitch-header::before {
+        left: 2px;
+        text-shadow: -2px 0 var(--primary-color);
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        animation: glitch-anim-1 2s infinite linear alternate-reverse;
+      }
+      .glitch-header::after {
+        left: -2px;
+        text-shadow: -2px 0 var(--secondary-color), 2px 2px var(--primary-color);
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+        animation: glitch-anim-2 3s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-skew {
+        0% { transform: skewX(0); }
+        10% { transform: skewX(0.5deg); }
+        20% { transform: skewX(-0.5deg); }
+        30% { transform: skewX(0); }
+        100% { transform: skewX(0); }
+      }
+
+      @keyframes glitch-anim-1 {
+        0% { clip-path: polygon(0 2%, 100% 2%, 100% 45%, 0 45%); }
+        2% { clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%); }
+        5% { clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%); }
+        /* ... more steps for chaotic effect ... */
+        100% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); }
+      }
+      @keyframes glitch-anim-2 {
+        0% { clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%); }
+        3% { clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%); }
+        /* ... more steps for chaotic effect ... */
+        100% { clip-path: polygon(0 90%, 100% 90%, 100% 95%, 0 95%); }
+      }
+
+      .header .subtitle {
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+        gap: 1rem;
+      }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        background-color: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px var(--glow-color);
+      }
+      .social-link svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .input-form {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .url-input {
+        flex-grow: 1;
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .url-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px var(--glow-color);
+      }
+
+      .download-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .download-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px var(--glow-color), 0 5px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .download-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .spinner {
+        border: 4px solid var(--border-color);
+        border-top: 4px solid var(--primary-color);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 2rem auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error-message {
+        color: #ff4d4d;
+        background-color: rgba(255, 77, 77, 0.1);
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 77, 77, 0.2);
+      }
+
+      .media-card {
+        background-color: var(--card-bg-color);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        animation: fadeIn 0.5s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .media-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--glow-color);
+      }
+      
+      .media-info {
+        display: flex;
+        gap: 1.5rem;
+        text-align: left;
+      }
+
+      .media-card img {
+        width: 160px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+      
+      .media-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-grow: 1;
+      }
+      
+      .platform-info {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.9rem;
+          opacity: 0.7;
+      }
+
+      .platform-info svg {
+          width: 18px;
+          height: 18px;
+      }
+
+      .media-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      
+      .watermark-option {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.03);
+        border-top: 1px solid var(--border-color);
+        margin-top: 1rem;
+      }
+
+      .watermark-option .watermark-label {
+        color: var(--text-color);
+        font-size: 0.9rem;
+        flex-shrink: 0; /* Prevent label from shrinking */
+      }
+
+      .watermark-input {
+        flex-grow: 1; /* Allow input to take available space */
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-color);
+        outline: none;
+        transition: all 0.3s ease;
+        min-width: 100px; /* Ensure it doesn't get too small */
+      }
+
+      .watermark-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 8px var(--glow-color);
+      }
+
+      .undo-redo-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap; /* Prevent text from breaking */
+      }
+
+      .undo-redo-btn:hover:not(:disabled) {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        transform: translateY(-1px);
+        box-shadow: 0 0 10px var(--glow-color-light); /* Add glow on hover */
+      }
+
+      .undo-redo-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .download-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+
+      .download-option-btn {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 0.7rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+        text-decoration: none;
+        animation: popIn 0.5s ease-out backwards;
+      }
+
+      .download-option-btn:nth-child(2) { animation-delay: 0.1s; }
+      .download-option-btn:nth-child(3) { animation-delay: 0.2s; }
+      .download-option-btn:nth-child(4) { animation-delay: 0.3s; }
+
+      @keyframes popIn {
+          from {
+              opacity: 0;
+              transform: scale(0.8);
+          }
+          to {
+              opacity: 1;
+              transform: scale(1);
+          }
+      }
+
+      .download-option-btn:hover {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px var(--glow-color-light); /* Add glow on hover */
+      }
+
+      /* --- Responsive Design --- */
+      @media (max-width: 600px) {
+        body {
+          align-items: flex-start;
+          padding-top: 2rem;
+        }
+        
+        #root {
+          padding: 1rem;
+        }
+
+        .glitch-header {
+          font-size: 2.2rem;
+        }
+        
+        .header .subtitle {
+          font-size: 1rem;
+        }
+
+        .input-form {
+          flex-direction: column;
+        }
+
+        .media-info {
+          flex-direction: column;
+        }
+        
+        .media-card img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            max-height: 200px;
+        }
+
+        .watermark-option {
+          flex-direction: column; /* Stack elements vertically on small screens */
+          align-items: stretch;
+        }
+
+        .watermark-input {
+          width: 100%; /* Full width on small screens */
+        }
+        
+        .watermark-option .watermark-label {
+          text-align: left;
+        }
+
+        .undo-redo-btn {
+          width: 100%; /* Full width for buttons on small screens */
+        }
+
+        .social-link {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
